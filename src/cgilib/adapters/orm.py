@@ -1,9 +1,7 @@
 from cgitb import text
-from curses import meta
 import logging
 from sqlite3 import Date
 from typing import Text
-from typing_extensions import Required
 from sqlalchemy import (
     ForeignKey,
     Table,
@@ -13,12 +11,12 @@ from sqlalchemy import (
     String,
     DateTime,
     Text,
-    event,
 )
 
 from sqlalchemy.orm import mapper
 
-from ..domain.models import Role, Address, Command, Checklist, Reference, Subsection, Person, Question
+#from ..domain import models
+from domain.models import Role, Address, Command, Reference, Checklist, Subsection, Question, Person
 
 logger = logging.getLogger(__name__)
 
@@ -37,8 +35,8 @@ date_added TEXT NOT NULL
 date_edited TEXT NOT NULL
 """
 
-roles = Table( # THERE SHOULD BE MORE COLUMNS HERE!!!!!!!!!!!!!!!!!
-    "roles",
+roles = Table( 
+    "Roles",
     metadata,
     Column("RoleID", Integer, primary_key=True, autoincrement=True),
     Column("Role", String(255), unique=True, Required=True)
@@ -115,7 +113,7 @@ persons = Table(
     Column("AddressID", Integer, ForeignKey=(addresses.AddressID))
 )   
 
-def start_mappers(): # not sure what this does - DDG
+def start_mappers():
     logger.info("string mappers")
     roles_mapper = mapper(Role, roles)
     addresses_mapper = mapper(Address, addresses)

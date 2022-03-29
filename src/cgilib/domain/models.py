@@ -8,9 +8,7 @@ Base = declarative_base()
 
 class Role:
     """
-    This module supports the following schema:
-
-    CREATE TABLE IF NOT EXISTS Role (     
+      CREATE TABLE IF NOT EXISTS Role (     
             id       INT     NOT NULL,
             role char(50) NOT NULL,
             PRIMARY KEY (RoleID)	
