@@ -194,19 +194,12 @@ class QuestionSchema(ma.Schema):
 
 # Init schemas
 subsection_schema = SubsectionSchema()
-subsection_schema = SubsectionSchema()
 question_schema = QuestionSchema()
-questions_schema = QuestionSchema()
 person_schema = PersonSchema()
-persons_schema = PersonSchema()
 reference_schema = ReferenceSchema()
-references_schema = ReferenceSchema()
 checklist_schema = ChecklistSchema()
-checklists_schema = ChecklistSchema()
 command_schema = CommandSchema()
-commands_schema = CommandSchema()
 role_schema = RoleSchema()
-roles_schema = RoleSchema()
 
 
 # Create a Checklist
@@ -229,8 +222,8 @@ def add_checklist():
 @app.route("/checklist", methods=["GET"])
 def get_checklists():
     all_checklists = Checklist.query.all()
-    result = checklists_schema.dump(all_checklists)
-    return jsonify(result)
+    result = checklist_schema.dump(all_checklists,many=True)
+    return checklist_schema.jsonify(result, many=True)
 
 
 # Create a role
