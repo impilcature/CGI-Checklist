@@ -19,6 +19,7 @@ class Role:
         self.id = id
         self.role = role
 
+
 class Address:
     """
         CREATE TABLE IF NOT EXISTS Address (
@@ -31,6 +32,7 @@ class Address:
                 PRIMARY KEY (AddressID)      
         );
     """
+
     def __init__(self, id, street1, street2, city, state, postalcode, commands) -> None:
         self.id = id
         self.street1 = street1
@@ -53,12 +55,12 @@ class Command:
             );
     """
 
-    def __init__(self, id, uic, name, region,addressid) -> None:
+    def __init__(self, id, uic, name, region, addressid) -> None:
         self.id = id
         self.uic = uic
         self.name = name
         self.region = region
-        self.AddressID= addressid
+        self.AddressID = addressid
 
 
 class Checklist:
@@ -74,7 +76,10 @@ class Checklist:
                 primary key (ChecklistID),
     
     """
-    def __init__(self, id, name, referenceid, revisiondate, assessment, footer, applicability) -> None:
+
+    def __init__(
+        self, id, name, referenceid, revisiondate, assessment, footer, applicability
+    ) -> None:
         self.id = id
         self.name = name
         self.revisiondate = revisiondate
@@ -94,12 +99,12 @@ class Reference:
                 PRIMARY KEY (ReferenceID)
             );  
     """
+
     def __init__(self, id, title, page, paragraph) -> None:
         self.id = id
         self.title = title
         self.page = page
         self.paragraph = paragraph
-
 
 
 class Subsection:
@@ -110,10 +115,10 @@ class Subsection:
                 PRIMARY KEY (SubsectionID)
         );
     """
+
     def __init__(self, id, title) -> None:
         self.id = id
         self.title = title
-
 
 
 class Person:
@@ -133,7 +138,10 @@ CREATE TABLE IF NOT EXISTS Person (
   );	
 
 """
-    def __init__(self, id, lastname, firstname, phone,commandid, roleid, addressid) -> None:
+
+    def __init__(
+        self, id, lastname, firstname, phone, commandid, roleid, addressid
+    ) -> None:
         self.id = id
         self.lastname = lastname
         self.firstname = firstname
@@ -141,6 +149,7 @@ CREATE TABLE IF NOT EXISTS Person (
         self.commandid = commandid
         self.roleid = roleid
         self.addressid = addressid
+
 
 class Question:
     """		QuestionID INT NOT NULL,
@@ -150,6 +159,7 @@ class Question:
 		Foreign key (Reference_ReferenceID) REFERENCES Reference(ReferenceID),
         PRIMARY KEY (QuestionID);
         """
+
     def __init__(self, id, question, results, referenceID) -> None:
         self.id - id
         self.question = question

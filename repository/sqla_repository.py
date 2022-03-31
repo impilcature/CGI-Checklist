@@ -7,6 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from .base_repository import BaseRepository
 from .models import Base, BookmarkModel
 
+
 class SQLARespository(BaseRepository):
     """
     Uses guidance from the basic SQLAlchemy 1.3 tutorial: https://docs.sqlalchemy.org/en/13/orm/tutorial.html
@@ -22,7 +23,7 @@ class SQLARespository(BaseRepository):
             self.engine = create_engine(url)
         else:
             # let's default to in-memory for now
-            self.engine = create_engine('sqlite:///:memory:', echo=True)
+            self.engine = create_engine("sqlite:///:memory:", echo=True)
 
         # ensure tables are there
         Base.metadata.create_all(self.engine)
