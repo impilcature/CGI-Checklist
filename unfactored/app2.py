@@ -236,7 +236,14 @@ def add_role():
     db.session.add(new_role)
     db.session.commit()
 
-    return checklist_schema.jsonify(new_role)
+    return role_schema.jsonify(new_role)
+
+# Get All roles
+@app.route("/role", methods=["GET"])
+def get_roles():
+    all_roles = Role.query.all()
+    result = role_schema.dump(all_roles,many=True)
+    return role_schema.jsonify(result, many=True)
 
 
 # Run Server
