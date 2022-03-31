@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-# Completed this model based off of Barky.  The classes from this module should be imported to ORM
+# Completed this model based off of Barky.  The classes from this module should be imported to ORM as string mappers
 
 
 class Role:
