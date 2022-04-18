@@ -1,7 +1,12 @@
+
+from flask_marshmallow import Marshmallow
+
 from sqlalchemy import Column, String, Integer, Date
 from sqlalchemy.ext.declarative import declarative_base
-from ..services import db, ma
+from flaskapi import app,db
 
+# Init ma
+ma = Marshmallow(app)
 
 # Classes and models
 class Role(db.Model):
