@@ -1,27 +1,16 @@
 
-"""
-lists all the app.route for the API functionality itself
-"""
 import os
 
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
-import repository.models as models
-
 # Init app
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-# Database
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
-    basedir, "cgi-checklist.sqlite"
-)
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
-# Init db
-db = SQLAlchemy(app)
+import repository.models as models
+import services.database as databasepy
 
 # Create a Checklist
 @app.route("/checklist", methods=["POST"])
@@ -34,8 +23,8 @@ def add_checklist():
 
     new_checklist = models.Checklist(name, revisiondate, assessment, footer, applicability)
 
-    db.session.add(new_checklist)
-    db.session.commit()
+    databasepy.db.session.add(new_checklist)
+    databasepy.db.session.commit()
 
     return models.checklist_schema.jsonify(new_checklist)
 
@@ -54,8 +43,8 @@ def add_role():
 
     new_role = models.Role(role)
 
-    db.session.add(new_role)
-    db.session.commit()
+    databasepy.db.session.add(new_role)
+    databasepy.db.session.commit()
 
     return models.role_schema.jsonify(new_role)
 
@@ -66,12 +55,6 @@ def get_roles():
     result = models.role_schema.dump(all_roles,many=True)
     return models.role_schema.jsonify(result, many=True)
 
-def init_db():
-    db.init_app(app)
-    db.app = app
-    db.create_all()
-
 # Run Server
 if __name__ == "__main__":
-    init_db()
     app.run(debug=True)
