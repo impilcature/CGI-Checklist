@@ -9,3 +9,6 @@ running flaskapi.py starts the program and creates the local database (not compl
 not get accomplished in the refactor).
 
 I used postman to interact and test the API portion of the program.
+
+The command portion of the API is not of the domain model.  The command portion of the application is a Marine Corps command.
+this requires delineation in any future implementations.
