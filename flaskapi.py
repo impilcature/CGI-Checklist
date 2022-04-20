@@ -1,16 +1,30 @@
-
 import os
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, request
+from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
+# establish basedir
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+# upload configs
+UPLOAD_FOLDER = basedir + '/uploads'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'docx', 'doc', 'rtf'}
+
 # Init app
 app = Flask(__name__)
-basedir = os.path.abspath(os.path.dirname(__file__))
+
+# set app config for upload folder
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 import repository.models as models
 import services.database as databasepy
+
+db, app = databasepy.databaseconfig(app, basedir)
+
+db, app, subsection_schema, question_schema, person_schema, reference_schema, checklist_schema, command_schema, role_schema = models.setupdb(db, app)
 
 # Create a Checklist
 @app.route("/checklist", methods=["POST"])
@@ -23,8 +37,8 @@ def add_checklist():
 
     new_checklist = models.Checklist(name, revisiondate, assessment, footer, applicability)
 
-    databasepy.db.session.add(new_checklist)
-    databasepy.db.session.commit()
+    db.session.add(new_checklist)
+    db.session.commit()
 
     return models.checklist_schema.jsonify(new_checklist)
 
@@ -43,8 +57,8 @@ def add_role():
 
     new_role = models.Role(role)
 
-    databasepy.db.session.add(new_role)
-    databasepy.db.session.commit()
+    db.session.add(new_role)
+    db.session.commit()
 
     return models.role_schema.jsonify(new_role)
 
@@ -54,6 +68,17 @@ def get_roles():
     all_roles = models.Role.query.all()
     result = models.role_schema.dump(all_roles,many=True)
     return models.role_schema.jsonify(result, many=True)
+
+@app.route('/upload')
+def fileuploadtemp():
+   return render_template('upload.html')
+	
+@app.route('/uploader', methods = ['GET', 'POST'])
+def fileupload():
+   if request.method == 'POST':
+      f = request.files['file']
+      f.save(secure_filename(f.filename))
+      return 'file uploaded successfully'
 
 # Run Server
 if __name__ == "__main__":
