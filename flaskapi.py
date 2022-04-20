@@ -9,7 +9,7 @@ from flask_marshmallow import Marshmallow
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # upload configs
-UPLOAD_FOLDER = basedir + '/uploads'
+UPLOAD_FOLDER = '/uploads'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'docx', 'doc', 'rtf'}
 
 # Init app
@@ -69,10 +69,12 @@ def get_roles():
     result = models.role_schema.dump(all_roles,many=True)
     return models.role_schema.jsonify(result, many=True)
 
+# upload to temp
 @app.route('/upload')
 def fileuploadtemp():
    return render_template('upload.html')
-	
+
+# upload file	
 @app.route('/uploader', methods = ['GET', 'POST'])
 def fileupload():
    if request.method == 'POST':
