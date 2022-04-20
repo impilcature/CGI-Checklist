@@ -24,7 +24,7 @@ import services.database as databasepy
 
 db, app = databasepy.databaseconfig(app, basedir)
 
-db, app, subsection_schema, question_schema, person_schema, reference_schema, checklist_schema, command_schema, role_schema = models.setupdb(db, app)
+db, app, subsection_schema, question_schema, person_schema, reference_schema, checklist_schema, cklcommand_schema, role_schema = models.setupdb(db, app)
 
 # Create a Checklist
 @app.route("/checklist", methods=["POST"])

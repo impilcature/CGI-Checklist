@@ -25,7 +25,7 @@ def setupdb(db, app):
             fields = ("id", "role")
 
 
-    class Command(db.Model):
+    class CklCommand(db.Model):
         id = db.Column(db.Integer, primary_key=True)
         uic = db.Column(db.String(20), unique=True)
         name = db.Column(db.String(50))
@@ -49,7 +49,7 @@ def setupdb(db, app):
             self.postalcode = postalcode
 
 
-    class CommandSchema(ma.Schema):
+    class CklCommandSchema(ma.Schema):
         class Meta:
             fields = (
                 "id",
@@ -189,7 +189,7 @@ def setupdb(db, app):
     person_schema = PersonSchema()
     reference_schema = ReferenceSchema()
     checklist_schema = ChecklistSchema()
-    command_schema = CommandSchema()
+    cklcommand_schema = CklCommandSchema()
     role_schema = RoleSchema()
 
-    return db, app, subsection_schema, question_schema, person_schema, reference_schema, checklist_schema, command_schema, role_schema
+    return db, app, subsection_schema, question_schema, person_schema, reference_schema, checklist_schema, cklcommand_schema, role_schema
