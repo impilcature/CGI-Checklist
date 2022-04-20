@@ -7,3 +7,5 @@ however more work needs to be done in order to organize the files and integrate 
 
 running flaskapi.py starts the program and creates the local database (not completely implemented as the database setup did
 not get accomplished in the refactor).
+
+I used postman to interact and test the API portion of the program.
